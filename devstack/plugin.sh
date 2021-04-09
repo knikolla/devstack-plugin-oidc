@@ -11,6 +11,7 @@
 # under the License.
 
 OIDC_PLUGIN=$DEST/devstack-plugin-oidc/devstack
+source $OIDC_PLUGIN/lib/oidc.sh
 
 # For more information on Devstack plugins, including a more detailed
 # explanation on when the different steps are executed please see:
@@ -19,15 +20,18 @@ OIDC_PLUGIN=$DEST/devstack-plugin-oidc/devstack
 if [[ "$1" == "stack" && "$2" == "install" ]]; then
     # This phase is executed after the projects have been installed
     echo "OIDC plugin - Install phase"
+    install_federation
 
 elif [[ "$1" == "stack" && "$2" == "post-config" ]]; then
     # This phase is executed after the projects have been configured and
     # before they are started
     echo "OIDC plugin - Post-config phase"
+    configure_federation
 
 elif [[ "$1" == "stack" && "$2" == "extra" ]]; then
     # This phase is executed after the projects have been started
     echo "OIDC plugin - Extra phase"
+    register_federation
 
 elif [[ "$1" == "stack" && "$2" == "test-config" ]]; then
     # This phase is executed after Tempest was configured
