@@ -1,25 +1,22 @@
-{
-    "rules":
-    [
-        {
-            "local": [
-                {
-                    "user": {
-                        "name": "{0}"
-                    },
-                    "group": {
-                        "name": "sso_users",
-                        "domain": {
-                            "name": "sso"
-                        }
+[
+    {
+        "local": [
+            {
+                "user": {
+                    "name": "{0}"
+                },
+                "group": {
+                    "name": "sso_users",
+                    "domain": {
+                        "name": "sso"
                     }
                 }
-            ],
-            "remote": [
-                {
-                    "type": "OIDC-preferred_username"
-                }
-            ]
-        }
-    ]
-}
+            }
+        ],
+        "remote": [
+            {
+                "type": "OIDC-preferred_username"
+            }
+        ]
+    }
+]
