@@ -42,5 +42,7 @@ Vagrant.configure("2") do |config|
         enable_plugin devstack-plugin-oidc https://github.com/knikolla/devstack-plugin-oidc main
     " >> local.conf
     ./stack.sh
+
+    python3 /opt/stack/devstack-plugin-oidc/tools/test_login.py
   SHELL
 end
