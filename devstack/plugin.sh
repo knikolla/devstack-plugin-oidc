@@ -10,8 +10,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-OIDC_PLUGIN=$DEST/devstack-plugin-oidc/devstack
-source $OIDC_PLUGIN/lib/oidc.sh
+source $DEST/devstack-plugin-oidc/devstack/lib/oidc.sh
 
 # For more information on Devstack plugins, including a more detailed
 # explanation on when the different steps are executed please see:

@@ -19,6 +19,7 @@ OIDC_TOKEN_URL={OIDC_TOKEN_URL:-https://localhost:8080/auth/realms/master/protoc
 REDIRECT_URI="http://$HOST_IP/identity/v3/auth/OS-FEDERATION/identity_providers/sso/protocols/openid/websso"
 IDP_ID="sso"
 
+OIDC_PLUGIN="$DEST/devstack-plugin-oidc/devstack"
 
 function install_federation {
     if is_ubuntu; then
@@ -39,12 +40,13 @@ function configure_federation {
         restart_service "devstack@keystone"
     fi
 
-    local keystone_apache_conf=$(apache_site_config_for keystone)
+    local keystone_apache_conf=$(apache_site_config_for keystone-wsgi-public)
     cat $OIDC_PLUGIN/files/apache_oidc.conf | sudo tee -a $keystone_apache_conf
     sudo sed -i -e "
         s|%OIDC_CLIENT_ID%|$OIDC_CLIENT_ID|g;
         s|%OIDC_CLIENT_SECRET%|$OIDC_CLIENT_SECRET|g;
         s|%OIDC_METADATA_URL%|$OIDC_METADATA_URL|g;
+        s|%OIDC_TOKEN_URL%|$OIDC_TOKEN_URL|g;
         s|%HOST_IP%|$HOST_IP|g;
         s|%IDP_ID%|$IDP_ID|g;
     " $keystone_apache_conf
