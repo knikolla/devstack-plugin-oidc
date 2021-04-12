@@ -43,11 +43,13 @@ function configure_federation {
         restart_service "devstack@keystone"
     fi
 
-    if [[ "$OIDC_ISSUER" == "http://localhost:8080/auth/realms/master" ]]; then
+    if [[ "$OIDC_ISSUER" == "http://$HOST_IP:8080/auth/realms/master" ]]; then
         # Assuming we want to setup a local keycloak here.
         pip_install "git+git://github.com/CCI-MOC/onboarding-tools@f53e1ef#egg=onboarding_tools"
-        source $DEST/devstack-plugin-oidc/tools/.env
-        python3 $DEST/devstack-plugin-oidc/tools/setup_keycloak_client.py
+        KEYCLOAK_URL="http://$HOST_IP:8080" \
+            KEYCLOAK_USERNAME="admin" \
+            KEYCLOAK_PASSWORD="nomoresecret" \
+            python3 $DEST/devstack-plugin-oidc/tools/setup_keycloak_client.py
     fi
 
     local keystone_apache_conf=$(apache_site_config_for keystone-wsgi-public)

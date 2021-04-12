@@ -2,11 +2,6 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/focal64"
   config.vm.synced_folder ".", "/opt/stack/devstack-plugin-oidc/"
 
-  # TODO(knikolla): I still have some unpushed changes to
-  # https://github.com/CCI-MOC/sso. Have this clone after I have tested and
-  # pushed.
-  config.vm.synced_folder "../sso", "/opt/sso"
-
   # TODO(knikolla): I was having issues getting the ip address dynamically
   # during the provision step below. The command seemed to work correctly
   # during `vagrant ssh`, but not during the provision step. While I
@@ -15,7 +10,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
-    vb.memory = "4096"
+    vb.memory = "3072"
     vb.cpus = "2"
   end
 
@@ -27,7 +22,7 @@ Vagrant.configure("2") do |config|
     sudo mkdir -p /opt/stack
     sudo chown vagrant:vagrant /opt/stack
 
-    cd /opt/sso && sudo docker-compose up -d
+    cd /opt/stack/devstack-plugin-oidc/tools && sudo docker-compose up -d
 
     cd ~
     if [ ! -d "devstack" ] ; then
