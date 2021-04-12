@@ -12,9 +12,9 @@
 
 OIDC_CLIENT_ID=${CLIENT_ID:-devstack}
 OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET:-nomoresecret}
-OIDC_ISSUER=${OIDC_ISSUER:-http://localhost:8080/auth/realms/master}
-OIDC_METADATA_URL=${OIDC_METADATA_URL:-http://localhost:8080/auth/realms/master/.well-known/openid-configuration}
-OIDC_JWKS_URL=${OIDC_JWKS_URL:-https://localhost:8443/auth/realms/master/protocol/openid-connect/certs}
+OIDC_ISSUER=${OIDC_ISSUER:-"http://$HOST_IP:8080/auth/realms/master"}
+OIDC_METADATA_URL=${OIDC_METADATA_URL:-"http://$HOST_IP:8080/auth/realms/master/.well-known/openid-configuration"}
+OIDC_JWKS_URL=${OIDC_JWKS_URL:-"https://$HOST_IP:8443/auth/realms/master/protocol/openid-connect/certs"}
 
 REDIRECT_URI="http://$HOST_IP/identity/v3/auth/OS-FEDERATION/identity_providers/sso/protocols/openid/websso"
 IDP_ID="sso"
@@ -33,8 +33,11 @@ function install_federation {
 
 function configure_federation {
     # Specify the header that contains information about the identity provider
-    iniset $KEYSTONE_CONF mapped remote_id_attribute "HTTP_OIDC_ISS"
+    iniset $KEYSTONE_CONF openid remote_id_attribute "HTTP_OIDC_ISS"
     iniset $KEYSTONE_CONF auth methods "password,token,openid,application_credential"
+    iniset $KEYSTONE_CONF federation trusted_dashboard "http://$HOST_IP/auth/websso/"
+
+    cp /opt/stack/keystone/etc/sso_callback_template.html /etc/keystone/
 
     if [[ "$WSGI_MODE" == "uwsgi" ]]; then
         restart_service "devstack@keystone"
