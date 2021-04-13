@@ -38,6 +38,6 @@ Vagrant.configure("2") do |config|
     " >> local.conf
     ./stack.sh
 
-    python3 /opt/stack/devstack-plugin-oidc/tools/test_login.py
+    HOST_IP=10.0.3.2 python3 /opt/stack/devstack-plugin-oidc/tools/test_login.py
   SHELL
 end
