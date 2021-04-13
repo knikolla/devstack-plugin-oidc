@@ -24,8 +24,10 @@ OIDC_PLUGIN="$DEST/devstack-plugin-oidc/devstack"
 function install_federation {
     if is_ubuntu; then
         install_package libapache2-mod-auth-openidc
+        sudo a2enmod headers
     elif is_fedora; then
         install_package mod_auth_openidc
+        #FIXME: enable mod_headers
     else
         echo "Skipping installation. Only supported on Ubuntu and RHEL based."
     fi
