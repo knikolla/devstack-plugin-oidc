@@ -47,7 +47,7 @@ function configure_federation {
 
     if [[ "$OIDC_ISSUER" == "http://$HOST_IP:8080/auth/realms/master" ]]; then
         # Assuming we want to setup a local keycloak here.
-        pip_install "git+git://github.com/CCI-MOC/onboarding-tools@f53e1ef#egg=onboarding_tools"
+        pip_install "git+git://github.com/CCI-MOC/onboarding-tools@be619be8904b08b07b3e9d10562f800ddf463d1f#egg=onboarding_tools"
         KEYCLOAK_URL="http://$HOST_IP:8080" \
             KEYCLOAK_USERNAME="admin" \
             KEYCLOAK_PASSWORD="nomoresecret" \
