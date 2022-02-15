@@ -43,8 +43,8 @@ variables.
 
 ## References
 For an example of setting up a more complete Devstack,
-including Nova, Cinder, and Glance, see [here]
-(https://github.com/nerc-project/coldfront-plugin-openstack/blob/main/ci/devstack.sh).
+including Nova, Cinder, and Glance, see [here](
+https://github.com/nerc-project/coldfront-plugin-openstack/blob/main/ci/devstack.sh).
 This is used by `nerc-project/coldfront-plugin-openstack` to perform
 integration testing with OpenStack and Keycloak in a GitHub Action.
 
