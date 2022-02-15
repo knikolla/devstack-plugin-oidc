@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
 
     sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install docker.io docker-compose -y
 
+    # Used to detect the HOST_IP using `tools/config.sh`
     sudo apt-get install net-tools -y
 
     source /opt/stack/devstack-plugin-oidc/tools/config.sh
@@ -20,6 +21,7 @@ Vagrant.configure("2") do |config|
     sudo mkdir -p /opt/stack
     sudo chown vagrant:vagrant /opt/stack
 
+    # Starts a Keycloak instance using `tools/docker-compose.yaml`
     cd /opt/stack/devstack-plugin-oidc/tools && sudo docker-compose up -d
 
     cd ~

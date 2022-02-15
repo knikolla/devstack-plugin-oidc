@@ -16,8 +16,8 @@ OIDC_ISSUER=${OIDC_ISSUER:-"http://$HOST_IP:8080/auth/realms/master"}
 OIDC_METADATA_URL=${OIDC_METADATA_URL:-"http://$HOST_IP:8080/auth/realms/master/.well-known/openid-configuration"}
 OIDC_JWKS_URL=${OIDC_JWKS_URL:-"https://$HOST_IP:8443/auth/realms/master/protocol/openid-connect/certs"}
 
-REDIRECT_URI="http://$HOST_IP/identity/v3/auth/OS-FEDERATION/identity_providers/sso/protocols/openid/websso"
-IDP_ID="sso"
+IDP_ID=${IDP_ID:-sso}
+REDIRECT_URI="http://$HOST_IP/identity/v3/auth/OS-FEDERATION/identity_providers/$IDP_ID/protocols/openid/websso"
 
 OIDC_PLUGIN="$DEST/devstack-plugin-oidc/devstack"
 
@@ -76,7 +76,7 @@ function register_federation {
 
     openstack role add --group $group --project $project $role
 
-    openstack identity provider create --remote-id $OIDC_ISSUER --domain $domain sso
+    openstack identity provider create --remote-id $OIDC_ISSUER --domain $domain $IDP_ID
     openstack mapping create --rules $OIDC_PLUGIN/files/mapping.json sso_oidc_mapping
-    openstack federation protocol create --identity-provider sso --mapping sso_oidc_mapping openid
+    openstack federation protocol create --identity-provider $IDP_ID --mapping sso_oidc_mapping openid
 }
