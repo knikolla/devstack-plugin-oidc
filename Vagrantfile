@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
     fi
     cd devstack
 
-    git checkout stable/wallaby
+    git checkout stable/yoga
 
     cp samples/local.conf .
     echo "
