@@ -1,3 +1,8 @@
+> [!IMPORTANT]  
+> This functionality is now integrated into the Keystone Devstack plugin
+> and this repository is no longer required.
+> https://github.com/openstack/keystone/tree/master/devstack
+
 # OpenID Connect Plugin for Devstack
 Devstack plugin that automates setting up OpenID Connect with Keystone
 and Devstack.
